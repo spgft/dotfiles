@@ -1,13 +1,11 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
-
+vim.keymap.set("i", "<C-BS>", "<C-w>", { noremap = true })
 -- Telescope keymaps
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<C-a>", "ggVG", opts)
 keymap("v", "<C-c>", '"+y', opts)
-keymap({"n", "i"}, "<C-v>", '"+p', opts)
 local harpoon = require("harpoon")
-
 -- Add file to Harpoon list
 vim.keymap.set("n", "<leader>a", function()
   harpoon:list():append()
@@ -34,4 +32,3 @@ end, { desc = "Harpoon to file 3", silent = true })
 vim.keymap.set("n", "<C-u>", function()
   harpoon:list():select(4)
 end, { desc = "Harpoon to file 4", silent = true })
-

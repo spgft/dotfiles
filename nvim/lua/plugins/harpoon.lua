@@ -6,4 +6,3 @@ return {
     require("harpoon"):setup()
   end,
 }
-

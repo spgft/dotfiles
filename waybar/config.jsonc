@@ -1,0 +1,64 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 34,
+
+  "modules-left": ["custom/arch", "hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["battery", "network" , "tray" , "pulseaudio" , 
+    "backlight"],
+
+  "custom/arch": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "on-click": "activate",
+    "persistent_workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": []
+    }
+      },
+    "pulseaudio": {
+        "format": " {volume}%",
+        "format-muted": " Muted",
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 1",
+        "on-scroll-down": "pamixer -d 1",
+        "scroll-step": 1,
+        "tooltip": false,
+        "format-icons": ["", "", ""]
+    },
+
+  "clock": {
+    "format": "{:%a, %d %b, %I:%M %p}",
+    "tooltip-format": "{:%A, %d %B %Y}"
+  },
+
+  "battery": {
+    "format": " {capacity}%",
+    "format-charging": " {capacity}%"
+  },
+
+  "network": {
+    "format-wifi": " {essid}",
+    "format-ethernet": " {ipaddr}",
+    "format-disconnected": "⚠ Disconnected"
+  },
+  "backlight": {
+  "device": "intel_backlight",
+  "format": "{icon} {percent}%",
+  "format-icons": ["󰃞", "󰃟", "󰃠"],
+  "on-scroll-up": "brightnessctl set 1%+",
+  "on-scroll-down": "brightnessctl set 1%-",
+  "min-length": 6
+},
+"tray": {
+  "spacing": 10
+}
+
+}
