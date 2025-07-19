@@ -1,0 +1,63 @@
+@theme "~/.config/rofi/themes/custom-dark.rasi"
+configuration {
+  show-icons: true;
+  icon-theme: "Papirus";  // <-- use Tela-circle here
+  modi: "drun";
+  font: "JetBrainsMono Nerd Font 12";
+  terminal: "kitty";
+}
+
+* {
+  font: "JetBrainsMono Nerd Font 12";
+  background-color: rgba(4, 14, 31, 0.1);
+  border-radius: 10px;
+  text-color: #ffffff;
+}
+
+window {
+  width: 600px;
+  location: center;
+}
+
+mainbox {
+  children: [ inputbar, listview ];
+}
+
+listview {
+  lines: 8;  // limits number of visible entries
+  spacing: 2px;
+  dynamic: true;
+}
+
+inputbar {
+  padding: 6px 10px;
+  spacing: 15px; // <--- this creates space between drun: and the text
+  children: [ prompt, entry ];
+}
+
+element {
+  padding: 6px;
+  spacing: 8px;
+  children: [ element-icon, element-text ];
+}
+
+element-icon {
+  size: 1.2em;
+  margin: 0px 6px 0px 0px;
+}
+
+element-text {
+  text-color: #ffffff;
+  expand: true;
+}
+
+element normal {
+  background-color: transparent;
+  text-color: #bbbbbb;
+}
+
+element selected {
+  background-color: rgba(255, 255, 255, 0.1);  // light highlight
+  text-color: #ffffff;
+}
+

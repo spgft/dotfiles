@@ -1,0 +1,42 @@
+* {
+  font: "JetBrainsMono Nerd Font 10";
+  background-color: rgba(82, 21, 161, 0.9);
+  border-radius: 10px;
+  text-color: #ffffff;
+}
+
+window {
+  width: 400px;
+  location: center;
+}
+
+mainbox {
+  children: [ inputbar, listview ];
+}
+
+listview {
+  lines: 5;
+  spacing: 2px;
+  dynamic: true;
+}
+
+inputbar {
+  padding: 6px;
+}
+
+element {
+  padding: 4px;
+  spacing: 8px;
+  children: [ element-icon, element-text ];  // <-- Important
+}
+
+element-icon {
+  size: 1.2em;
+  margin: 0px 6px 0px 0px;
+}
+
+element-text {
+  text-color: #ffffff;
+  expand: true;
+}
+
