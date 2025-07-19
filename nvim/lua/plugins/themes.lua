@@ -1,6 +1,6 @@
 return {
   {
-    "vague2k/vague.nvim",
+    "vague3k/vague.nvim",
     config = function()
       require("vague").setup({
         -- your vague.nvim options, optional
