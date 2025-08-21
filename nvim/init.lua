@@ -17,4 +17,3 @@ require("lazy").setup("plugins")
 -- Load your keymaps
 require("keymaps")
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "#ffffff", bg = "#ff007c", bold = true })
-

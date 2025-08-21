@@ -15,21 +15,15 @@ return {
 
     mason.setup()
 
+    -- ---------- Diagnostics Config ----------
     vim.diagnostic.config({
-      virtual_text = {
-        prefix = "●",
-        spacing = 2,
-      },
+      virtual_text = false,  -- disable inline floating text
       signs = true,
       underline = true,
       update_in_insert = false,
       severity_sort = true,
+      float = false,         -- disable floating popup completely
     })
-
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    for type, icon in pairs(signs) do
-      vim.fn.sign_define("DiagnostiSign" .. type, { text = icon, texthl = "", numhl = "" })
-    end
 
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -44,29 +38,24 @@ return {
       keymap.set("n", "K", vim.lsp.buf.hover, opts)
       keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
       keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-      keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+      keymap.set("n", "<leader>D", vim.diagnostic.open_float, opts)
       keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
+
+      -- ---------- Bottom Diagnostics Panel ----------
+      -- Auto-update location list in real-time
+      vim.api.nvim_create_autocmd({ "DiagnosticChanged" }, {
+        callback = function()
+          vim.diagnostic.setloclist({ open = false }) -- update silently
+        end,
+      })
+
+      -- Mapping to open bottom diagnostics manually
+      keymap.set("n", "<leader>d", function()
+        vim.diagnostic.setloclist({ open = true })
+      end, opts)
     end
 
-    -- 🧹 Filter out unwanted diagnostic messages globally
-    local orig_handler = vim.diagnostic.handlers.virtual_text
-    vim.diagnostic.handlers.virtual_text = {
-      show = function(ns, bufnr, diagnostics, opts)
-        local filtered = {}
-        for _, diagnostic in ipairs(diagnostics) do
-          if not diagnostic.message:match("header is unused")
-            and not diagnostic.message:match("is declared but never used")
-            and not diagnostic.message:match("included but not used") then
-            table.insert(filtered, diagnostic)
-          end
-        end
-        orig_handler.show(ns, bufnr, filtered, opts)
-      end,
-      hide = function(ns, bufnr)
-        orig_handler.hide(ns, bufnr)
-      end,
-    }
-
+    -- ---------- Filtered floating diagnostics (still works on <leader>d) ----------
     local orig_float = vim.diagnostic.open_float
     vim.diagnostic.open_float = function(bufnr, opts)
       opts = opts or {}
@@ -83,21 +72,10 @@ return {
       return orig_float(bufnr, opts)
     end
 
-    -- Setup servers
-    lspconfig["html"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig["cssls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig["ts_ls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
+    -- ---------- Setup LSP Servers ----------
+    lspconfig["html"].setup({ capabilities = capabilities, on_attach = on_attach })
+    lspconfig["cssls"].setup({ capabilities = capabilities, on_attach = on_attach })
+    lspconfig["ts_ls"].setup({ capabilities = capabilities, on_attach = on_attach })
 
     lspconfig["pyright"].setup({
       capabilities = capabilities,
@@ -105,12 +83,10 @@ return {
       before_init = function(params)
         local function get_python_path()
           local cwd = vim.fn.getcwd()
-
           local venv = os.getenv("VIRTUAL_ENV")
           if venv and vim.fn.executable(venv .. "/bin/python") == 1 then
             return venv .. "/bin/python"
           end
-
           local venv_names = { ".venv", "venv", "env", ".env" }
           for _, name in ipairs(venv_names) do
             local path = cwd .. "/" .. name .. "/bin/python"
@@ -118,7 +94,6 @@ return {
               return path
             end
           end
-
           local pyenv_root = os.getenv("PYENV_ROOT") or os.getenv("HOME") .. "/.pyenv"
           local handle = io.popen("pyenv version-name")
           local version = handle and handle:read("*l")
@@ -129,7 +104,6 @@ return {
               return pyenv_python
             end
           end
-
           return vim.fn.exepath("python3") or "python3"
         end
 
@@ -140,24 +114,17 @@ return {
       end,
     })
 
-    lspconfig["clangd"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
+    lspconfig["clangd"].setup({ capabilities = capabilities, on_attach = on_attach })
 
     lspconfig["emmet_ls"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
       filetypes = {
-        "html",
-        "css",
-        "scss",
-        "sass",
-        "less",
-        "typescriptreact",
-        "javascriptreact",
+        "html", "css", "scss", "sass", "less", "typescriptreact", "javascriptreact",
       },
     })
+
+    lspconfig["bashls"].setup({ capabilities = capabilities, on_attach = on_attach })
   end,
 }
 

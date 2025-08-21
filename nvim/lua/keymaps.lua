@@ -5,6 +5,7 @@ vim.keymap.set("i", "<C-BS>", "<C-w>", { noremap = true })
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 keymap("n", "<C-a>", "ggVG", opts)
 keymap("v", "<C-c>", '"+y', opts)
+vim.keymap.set("n", "<leader>df", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
 local harpoon = require("harpoon")
 -- Add file to Harpoon list
 vim.keymap.set("n", "<leader>a", function()

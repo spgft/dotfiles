@@ -1,6 +1,6 @@
 * {
-  font-family: JetBrainsMono Nerd Font, monospace;
-  font-size: 13px;
+  font-family: Iosevka Term;
+  font-size: 12px;
   color: white;
   padding: 0 0px;
   border: none;
@@ -41,11 +41,11 @@ window#waybar {
 
 /* Active workspace */
 #workspaces button.active {
-  background-color: rgba(50, 50, 50, 0.4); /* slightly more defined */
+  background-color: #7c818c; /* slightly more defined */
   color: #ffffff;
   font-weight: bold;
   border-radius: 6px;
-  box-shadow: 0 0 8px rgba(30, 30, 30, 0.7);
+  box-shadow: inherit;
   transition: background-color 0.3s ease;
 }
 
