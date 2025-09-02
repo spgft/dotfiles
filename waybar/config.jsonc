@@ -1,17 +1,17 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 34,
+  "height": 27,
 
   "modules-left": ["custom/arch", "hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["battery", "network" , "tray" , "pulseaudio" , 
     "backlight"],
-
-  "custom/arch": {
-    "format": "",
-    "tooltip": false
-  },
+  //
+  // "custom/arch": {
+  //   "format": "",
+  //   "tooltip": false
+  // },
 
   "hyprland/workspaces": {
     "disable-scroll": true,
